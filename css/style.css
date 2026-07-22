@@ -1,0 +1,27 @@
+/* ===== Reset básico ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* ===== Página Intro (MANZUR) ===== */
+.intro-title {
+    font-family: 'Archivo Black', sans-serif;
+    color: #000000;
+    /* En el diseño original mide 62.69cm x 17.46cm, 
+       usamos "vw" para que sea responsive y respete la proporción */
+    font-size: clamp(3rem, 12vw, 9rem);
+    letter-spacing: 2px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.intro-title:hover {
+    transform: scale(1.03);
+}
