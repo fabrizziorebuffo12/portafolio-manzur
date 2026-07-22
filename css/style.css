@@ -25,3 +25,20 @@ body {
 .intro-title:hover {
     transform: scale(1.03);
 }
+
+/* ===== Página Proyectos (grid) ===== */
+.proyecto-nombre {
+    font-family: 'Archivo Black', sans-serif;
+    color: #000000;
+    text-decoration: none;
+    font-size: clamp(1.1rem, 2.2vw, 1.8rem);
+    display: inline-block;
+    transition: transform 0.25s ease, letter-spacing 0.25s ease;
+}
+
+.proyecto-nombre:hover {
+    /* El diseño pide que crezca de 16.78x2.94cm a 17.61x3.09cm,
+       eso es un aumento de aprox 5% en ambas dimensiones */
+    transform: scale(1.05);
+    color: #000000; /* mantenemos el mismo color, sin cambio como pediste */
+}
