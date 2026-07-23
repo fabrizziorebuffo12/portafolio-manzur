@@ -1,4 +1,6 @@
-/* ===== Reset básico ===== */
+/* ===================================================
+   RESET BASICO
+=================================================== */
 * {
     margin: 0;
     padding: 0;
@@ -10,12 +12,12 @@ body {
     color: #000000;
 }
 
-/* ===== Página Intro (MANZUR) ===== */
+/* ===================================================
+   PAGINA INTRO (index.html) - "MANZUR"
+=================================================== */
 .intro-title {
     font-family: 'Archivo Black', sans-serif;
     color: #000000;
-    /* En el diseño original mide 62.69cm x 17.46cm, 
-       usamos "vw" para que sea responsive y respete la proporción */
     font-size: clamp(3rem, 12vw, 9rem);
     letter-spacing: 2px;
     text-align: center;
@@ -26,7 +28,9 @@ body {
     transform: scale(1.03);
 }
 
-/* ===== Página Proyectos (grid) ===== */
+/* ===================================================
+   PAGINA PROYECTOS (proyectos.html) - grid de 6
+=================================================== */
 .proyecto-nombre {
     font-family: 'Archivo Black', sans-serif;
     color: #000000;
@@ -37,8 +41,192 @@ body {
 }
 
 .proyecto-nombre:hover {
-    /* El diseño pide que crezca de 16.78x2.94cm a 17.61x3.09cm,
-       eso es un aumento de aprox 5% en ambas dimensiones */
     transform: scale(1.05);
-    color: #000000; /* mantenemos el mismo color, sin cambio como pediste */
+    color: #000000;
+}
+
+/* ===================================================
+   TITULO GENERAL DE PROYECTO (usado en proyecto-renders.html)
+=================================================== */
+.video-titulo {
+    font-family: 'Archivo Black', sans-serif;
+    color: #000000;
+    font-size: clamp(1.5rem, 4vw, 3rem);
+}
+
+/* ===================================================
+   PAGINA VIDEO (proyecto-video.html) - Carrusel 3D
+=================================================== */
+.carrusel-3d-contenedor {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-color: #ffffff;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tarjetas-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    perspective: 1200px;
+}
+
+/* Tarjeta mas compacta para que se note el margen blanco alrededor */
+.tarjeta {
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    width: min(1268px, 62vw);
+    aspect-ratio: 1268 / 741;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: #000000;
+    background-size: cover;
+    background-position: center;
+    transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1),
+                opacity 1s cubic-bezier(0.25, 1, 0.5, 1),
+                filter 1s ease;
+    will-change: transform, opacity, filter;
+}
+
+.tarjeta.no-activa {
+    filter: blur(1.5px) brightness(0.85);
+}
+
+.tarjeta::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 45%, transparent 70%);
+}
+
+.tarjeta-info {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    right: 24px;
+    z-index: 2;
+    color: #ffffff;
+}
+
+.tarjeta-ciudad {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 1.4rem;
+    margin-bottom: 4px;
+}
+
+.tarjeta-pais {
+    font-size: 0.9rem;
+    opacity: 0.85;
+}
+
+/* Titulo flotante arriba, ahora en negro (fondo blanco) */
+.video-titulo-overlay {
+    position: absolute;
+    top: 42px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: 'Archivo Black', sans-serif;
+    color: #000000;
+    font-size: clamp(1.3rem, 3.2vw, 2.4rem);
+    z-index: 10;
+}
+
+/* Indicadores (puntos), arriba a la izquierda, ahora en negro */
+.carrusel-indicadores {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+
+.carrusel-indicadores .punto {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,0.25);
+    transition: background-color 0.3s ease;
+}
+
+.carrusel-indicadores .punto.activo {
+    background-color: #000000;
+}
+
+/* Flechas de navegacion manual, delgadas y en negro */
+.flecha-nav {
+    position: absolute;
+    bottom: 40px;
+    background: none;
+    border: none;
+    color: #000000;
+    font-size: 1.6rem;
+    font-weight: 300;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 10;
+    transition: transform 0.2s ease;
+}
+
+.flecha-nav:hover {
+    transform: scale(1.15);
+}
+
+.flecha-nav-izq {
+    left: 40px;
+}
+
+.flecha-nav-der {
+    right: 40px;
+}
+
+/* ===================================================
+   PAGINA RENDERS/PLANOS (proyecto-renders.html)
+=================================================== */
+.texto-mano {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(1.3rem, 2.2vw, 2rem);
+    color: #000000;
+    max-width: 90%;
+    min-height: 6rem;
+}
+
+.render-marco {
+    border: 8px solid #000000;
+    width: 90%;
+    max-width: 600px;
+    height: 55vh;
+    max-height: 450px;
+    overflow: hidden;
+    background-color: #000000;
+}
+
+.render-marco img {
+    object-fit: cover;
+    transition: opacity 0.6s ease;
+}
+
+/* Iniciales generales (vinotinto), usadas en proyecto-renders.html */
+/* Iniciales centradas debajo de la tarjeta, color vinotinto exacto */
+.iniciales-overlay {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    color: #5F040E;
+    text-decoration: none;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(1.3rem, 2.5vw, 2rem);
+}
+.iniciales-fija {
+    position: fixed;
+    bottom: 30px;
+    left: 40px;
 }
