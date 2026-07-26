@@ -16,6 +16,16 @@ body {
     color: #000000;
     overflow-x: hidden;
     width: 100%;
+    /* CORRECCION: todo el texto del sitio va en MAYUSCULA... */
+    text-transform: uppercase;
+}
+
+/* ...excepto la descripcion del proyecto y los datos de contacto,
+   que van en su formato normal */
+.descripcion-texto,
+.home-contact-info,
+.home-contact-info * {
+    text-transform: none;
 }
 
 img {
@@ -113,61 +123,38 @@ img {
     background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 45%, transparent 70%);
 }
 
-.tarjeta-info {
-    position: absolute;
-    bottom: 24px;
-    left: 24px;
-    right: 24px;
-    z-index: 2;
-    color: #ffffff;
-}
-
-.tarjeta-ciudad {
-    font-family: 'Archivo Black', sans-serif;
-    font-size: 1.4rem;
-    margin-bottom: 4px;
-}
-
-.tarjeta-pais {
-    font-size: 0.9rem;
-    opacity: 0.85;
-}
-
+/* El nombre del proyecto va CENTRADO sobre el video.
+   Solo se oculta/muestra con click en el VIDEO (nunca con las
+   flechas de navegacion) - lo controla el JS con la clase .oculto */
 .video-titulo-overlay {
     position: absolute;
-    top: 15px;
-    left: 0;
-    right: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     text-align: center;
     font-family: 'Archivo Black', sans-serif;
-    color: #000000;
-    font-size: clamp(1.3rem, 3.2vw, 2.4rem);
+    color: #ffffff;
+    font-size: clamp(1.6rem, 4vw, 3rem);
+    letter-spacing: 1px;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.5);
     z-index: 10;
+    pointer-events: auto;
+    cursor: pointer;
+    opacity: 1;
+    transition: opacity 0.6s ease;
 }
 
-.carrusel-indicadores {
-    position: absolute;
-    top: 20px;
-    left: 40px;
-    display: flex;
-    gap: 8px;
-    z-index: 10;
+.video-titulo-overlay.oculto {
+    opacity: 0;
+    pointer-events: none;
 }
 
-.carrusel-indicadores .punto {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: rgba(0,0,0,0.25);
-    transition: background-color 0.3s ease;
-}
-
-.carrusel-indicadores .punto.activo {
-    background-color: #000000;
-}
-
+/* CORRECCION: A.M unificado - mismo tamano, mismo estilo y misma
+   posicion (centrado abajo, fijo en pantalla) en TODAS las vistas
+   que lo usan (video y descripcion). position: fixed para que no
+   dependa del scroll de cada pagina. */
 .iniciales-overlay {
-    position: absolute;
+    position: fixed;
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
@@ -179,10 +166,11 @@ img {
 }
 
 /* Flechas de navegacion manual, delgadas y en negro.
-   Por defecto son absolute (para el carrusel, que ocupa
-   exactamente 100vh y no tiene scroll) */
+   CORRECCION: unificadas a position: fixed para que queden en la
+   misma posicion en TODAS las vistas que tengan una, sin importar
+   el scroll de cada pagina. */
 .flecha-nav {
-    position: absolute;
+    position: fixed;
     bottom: 40px;
     background: none;
     border: none;
@@ -208,25 +196,10 @@ img {
     right: 40px;
 }
 
-/* Variante FIJA: para paginas donde el contenido puede ser
-   mas alto que la pantalla (ej. proyecto-descripcion.html).
-   Ancla la flecha a la esquina de la ventana, no del documento. */
-.flecha-nav-fija {
-    position: fixed;
-}
-
 /* ===================================================
    PAGINA RENDERS/PLANOS (proyecto-renders.html)
    -- sin usar por ahora, se deja el CSS por si se retoma --
 =================================================== */
-.texto-mano {
-    font-family: 'Caveat', cursive;
-    font-size: clamp(1.3rem, 2.2vw, 2rem);
-    color: #000000;
-    max-width: 90%;
-    min-height: 6rem;
-}
-
 .render-marco {
     border: 8px solid #000000;
     width: 90%;
@@ -249,59 +222,54 @@ img {
     font-size: clamp(1.3rem, 2.5vw, 2rem);
 }
 
-.iniciales-fija {
-    position: fixed;
-    bottom: 30px;
-    left: 40px;
-}
-
 /* ===================================================
    PAGINA DESCRIPCION (proyecto-descripcion.html)
 =================================================== */
 .descripcion-contenedor {
     width: 100%;
     min-height: 100vh;
-    padding: 60px 60px 100px;
+    padding: 40px 80px 110px;
     background-color: #ffffff;
+    display: flex;
+    align-items: center;
 }
 
 .descripcion-grid {
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
-    gap: 40px;
-    align-items: flex-start;
+    gap: 60px;
+    align-items: center;
     justify-content: center;
 }
 
 .descripcion-columna-texto {
-    flex: 1 1 320px;
-    max-width: 480px;
+    flex: 1 1 360px;
+    max-width: 520px;
 }
 
 .descripcion-titulo {
     font-family: 'Archivo Black', sans-serif;
     color: #000000;
     text-align: left;
-    font-size: clamp(2rem, 4.5vw, 3.2rem);
-    margin-bottom: 24px;
+    font-size: clamp(2.4rem, 4vw, 3.6rem);
+    margin-bottom: 28px;
 }
 
-.descripcion-frases {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-}
-
-.texto-mano-repetido {
-    width: 100%;
-    min-height: 140px;
-    border-bottom: 2px solid #1B3A6B;
-    padding-bottom: 8px;
+/* La descripcion es texto plano, sin animacion, en formato normal
+   (no mayuscula) */
+.descripcion-texto {
+    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 400;
+    color: #2b2b2b;
+    font-size: clamp(1.05rem, 1.15vw, 1.25rem);
+    line-height: 1.75;
+    max-width: 520px;
 }
 
 .descripcion-columna-imagen {
-    flex: 1 1 480px;
-    max-width: 700px;
+    flex: 1 1 520px;
+    max-width: 820px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -312,8 +280,8 @@ img {
     border: none;
     background-color: transparent;
     width: 100%;
-    height: 60vh;
-    max-height: 500px;
+    height: 62vh;
+    max-height: 560px;
     cursor: pointer;
 }
 
@@ -333,11 +301,6 @@ img {
 
 .descripcion-indicadores .punto.activo {
     background-color: #000000;
-}
-
-.descripcion-page .iniciales-fija {
-    left: 50%;
-    transform: translateX(-50%);
 }
 
 /* ===================================================
@@ -393,8 +356,6 @@ img {
     color: #000000;
 }
 
-/* A.M usa la misma clase .iniciales del resto del sitio,
-   asi que queda del mismo tamano y color en TODAS las vistas */
 .home-am {
     transition: transform 0.25s ease;
 }
@@ -497,17 +458,9 @@ img {
         right: 16px;
     }
 
-    .carrusel-indicadores {
-        left: 20px;
-    }
-
     /* --- proyecto-descripcion.html --- */
     .descripcion-contenedor {
         padding: 40px 20px 90px;
-    }
-
-    .descripcion-frases {
-        grid-template-columns: 1fr;
     }
 
     .descripcion-columna-imagen {
@@ -516,11 +469,6 @@ img {
 
     .render-marco-grande {
         height: 40vh;
-    }
-
-    .iniciales-fija {
-        left: 20px;
-        bottom: 20px;
     }
 
     /* --- home.html --- */
@@ -536,7 +484,6 @@ img {
         font-size: 1rem;
     }
 
-    /* Que el popup de contacto no se salga de la pantalla en movil */
     .home-contact-info {
         right: -10px;
         white-space: normal;
