@@ -229,10 +229,22 @@ img { max-width: 100%; }
     letter-spacing: 0.02em;
 }
 
-/* Los dos puntos parpadean como el separador de un reloj digital */
-.home-am-giant .blink {
+/* Los dos puntos: circulos reales (no el caracter ":"), centrados entre A y M */
+.home-am-giant .home-am-dots {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.16em;
+    width: 0.55em;
+    vertical-align: middle;
     animation: clock-blink 1s infinite;
-    display: inline-block;
+}
+.home-am-giant .punto-am {
+    width: 0.2em;
+    height: 0.2em;
+    border-radius: 50%;
+    background-color: #000000;
 }
 @keyframes clock-blink {
     0%, 50%       { opacity: 1; }
