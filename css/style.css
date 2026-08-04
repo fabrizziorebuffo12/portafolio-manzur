@@ -16,8 +16,9 @@ body {
     color: #000000;
     overflow-x: hidden;
     width: 100%;
-    /* CORRECCION: todo el texto del sitio va en MAYUSCULA... */
+    /* Todo el texto del sitio va en MAYUSCULA... */
     text-transform: uppercase;
+    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
 }
 
 /* ...excepto la descripcion del proyecto y los datos de contacto,
@@ -46,18 +47,41 @@ img {
 
 .intro-title:hover {
     transform: scale(1.03);
+    color: #000000;
 }
 
 /* ===================================================
    PAGINA PROYECTOS (proyectos.html) - grid de 6
 =================================================== */
+.proyectos-contenedor {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    padding: 6vh 6vw 12vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.proyectos-grid {
+    width: 100%;
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 5vh;
+    column-gap: 4vw;
+    justify-items: center;
+    align-items: center;
+}
+
 .proyecto-nombre {
     font-family: 'Archivo Black', sans-serif;
     color: #000000;
     text-decoration: none;
-    font-size: clamp(1.1rem, 2.2vw, 1.8rem);
+    font-size: clamp(1.1rem, 2vw, 1.7rem);
     display: inline-block;
-    transition: transform 0.25s ease, letter-spacing 0.25s ease;
+    text-align: center;
+    transition: transform 0.25s ease;
 }
 
 .proyecto-nombre:hover {
@@ -66,7 +90,7 @@ img {
 }
 
 /* ===================================================
-   TITULO GENERAL DE PROYECTO (usado en proyecto-renders.html)
+   TITULO GENERAL DE PROYECTO (por si se reusa)
 =================================================== */
 .video-titulo {
     font-family: 'Archivo Black', sans-serif;
@@ -112,49 +136,20 @@ img {
     will-change: transform, opacity, filter;
 }
 
+/* La tarjeta puede contener un <video> cuando enchufemos los videos reales */
+.tarjeta video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
 .tarjeta.no-activa {
     filter: blur(1.5px) brightness(0.85);
 }
 
-.tarjeta::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 45%, transparent 70%);
-}
-
-/* El nombre del proyecto va CENTRADO sobre el video.
-   Solo se oculta/muestra con click en el VIDEO (nunca con las
-   flechas de navegacion) - lo controla el JS con la clase .oculto */
-.video-titulo-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    font-family: 'Archivo Black', sans-serif;
-    color: #ffffff;
-    font-size: clamp(1.6rem, 4vw, 3rem);
-    letter-spacing: 1px;
-    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.5);
-    z-index: 10;
-    pointer-events: auto;
-    cursor: pointer;
-    opacity: 1;
-    transition: opacity 0.6s ease;
-}
-
-.video-titulo-overlay.oculto {
-    opacity: 0;
-    pointer-events: none;
-}
-
-/* CORRECCION: A.M unificado - mismo tamano, mismo estilo y misma
-   posicion (centrado abajo, fijo en pantalla) en TODAS las vistas
-   que lo usan (video y descripcion). position: fixed para que no
-   dependa del scroll de cada pagina. */
 .iniciales-overlay {
-    position: fixed;
+    position: absolute;
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
@@ -165,12 +160,9 @@ img {
     font-size: clamp(1.3rem, 2.5vw, 2rem);
 }
 
-/* Flechas de navegacion manual, delgadas y en negro.
-   CORRECCION: unificadas a position: fixed para que queden en la
-   misma posicion en TODAS las vistas que tengan una, sin importar
-   el scroll de cada pagina. */
+/* Flechas de navegacion */
 .flecha-nav {
-    position: fixed;
+    position: absolute;
     bottom: 40px;
     background: none;
     border: none;
@@ -186,6 +178,7 @@ img {
 
 .flecha-nav:hover {
     transform: scale(1.15);
+    color: #000000;
 }
 
 .flecha-nav-izq {
@@ -196,30 +189,39 @@ img {
     right: 40px;
 }
 
+/* Variante FIJA: para paginas donde el contenido puede ser mas alto
+   que la pantalla (ej. proyecto-descripcion.html) */
+.flecha-nav-fija {
+    position: fixed;
+}
+
 /* ===================================================
-   PAGINA RENDERS/PLANOS (proyecto-renders.html)
-   -- sin usar por ahora, se deja el CSS por si se retoma --
+   INICIALES A.M (comun a varias paginas)
 =================================================== */
-.render-marco {
-    border: 8px solid #000000;
-    width: 90%;
-    max-width: 600px;
-    height: 55vh;
-    max-height: 450px;
-    overflow: hidden;
-    background-color: #000000;
-}
-
-.render-marco img {
-    object-fit: cover;
-    transition: opacity 0.6s ease;
-}
-
 .iniciales {
     font-family: 'Archivo Black', sans-serif;
     color: #5F040E;
     text-decoration: none;
     font-size: clamp(1.3rem, 2.5vw, 2rem);
+    transition: transform 0.25s ease;
+}
+
+.iniciales:hover {
+    transform: scale(1.05);
+    color: #5F040E;
+}
+
+.iniciales-fija {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* En la pagina de descripcion, A.M queda abajo a la IZQUIERDA */
+.descripcion-page .iniciales-fija {
+    left: 40px;
+    transform: none;
 }
 
 /* ===================================================
@@ -256,8 +258,7 @@ img {
     margin-bottom: 28px;
 }
 
-/* La descripcion es texto plano, sin animacion, en formato normal
-   (no mayuscula) */
+/* Texto plano, en caja normal (no mayuscula), legible */
 .descripcion-texto {
     font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
     font-weight: 400;
@@ -274,6 +275,17 @@ img {
     flex-direction: column;
     align-items: center;
     gap: 20px;
+}
+
+.render-marco {
+    border: none;
+    background-color: #f2f2f2;
+    overflow: hidden;
+}
+
+.render-marco img {
+    object-fit: cover;
+    transition: opacity 0.3s ease;
 }
 
 .render-marco-grande {
@@ -304,7 +316,7 @@ img {
 }
 
 /* ===================================================
-   PAGINA HOME (home.html) - Titulo mas abajo + Menu/A.M/Contact abajo
+   PAGINA HOME (home.html) - Titulo + Menu/A.M/Contact
 =================================================== */
 .home-contenedor {
     width: 100%;
@@ -320,14 +332,13 @@ img {
     display: block;
     width: 100%;
     margin: 0 auto;
-    font-family: 'Franklin Gothic Heavy', 'Arial Black', sans-serif;
+    font-family: 'Archivo Black', sans-serif;
     color: #000000;
     text-align: center;
     font-size: clamp(1.8rem, 7vw, 4.5rem);
     letter-spacing: 1px;
 }
 
-/* Fila de abajo: MENU ---- A.M ---- CONTACT, separados a todo el ancho */
 .home-nav {
     width: 100%;
     max-width: 1200px;
@@ -340,8 +351,7 @@ img {
 }
 
 .home-link {
-    font-family: 'Acumin Variable Concept', 'Helvetica Neue', Arial, sans-serif;
-    font-weight: 700;
+    font-family: 'Archivo Black', sans-serif;
     color: #000000;
     text-decoration: none;
     font-size: clamp(0.95rem, 2.4vw, 2.1rem);
@@ -392,21 +402,21 @@ img {
 
 .home-contact-desc,
 .home-contact-dato {
-    font-family: 'Acumin Variable Concept', 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
     color: #000000;
     font-size: 0.95rem;
     margin-bottom: 4px;
 }
 
 .home-contact-ciudad {
-    font-family: 'Acumin Variable Concept', 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
     color: #5F040E;
     font-size: 0.7rem;
     margin-top: 6px;
 }
 
 /* ===================================================
-   RESPONSIVE GENERAL - Tablets (max 900px)
+   RESPONSIVE - Tablets (max 900px)
 =================================================== */
 @media (max-width: 900px) {
     .tarjeta {
@@ -417,48 +427,39 @@ img {
         padding: 50px 30px 90px;
     }
 
-    .proyecto-nombre {
-        font-size: clamp(1.3rem, 3vw, 1.8rem);
+    .proyectos-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
 /* ===================================================
-   RESPONSIVE GENERAL - Telefonos (max 600px)
+   RESPONSIVE - Telefonos (max 600px)
 =================================================== */
 @media (max-width: 600px) {
 
-    /* --- index.html --- */
     .intro-title {
         letter-spacing: 1px;
     }
 
-    /* --- proyectos.html --- */
-    .proyectos-page .row {
-        row-gap: 0;
-    }
-
-    .proyectos-page .mb-5 {
-        margin-bottom: 2rem !important;
+    /* Grid: en movil, una sola columna */
+    .proyectos-grid {
+        grid-template-columns: 1fr;
+        row-gap: 3.5vh;
     }
 
     .proyecto-nombre {
-        font-size: 1.4rem;
+        font-size: 1.35rem;
     }
 
-    /* --- proyecto-video.html --- */
+    /* Carrusel */
     .tarjeta {
         width: min(1268px, 88vw, 62vh);
     }
 
-    .flecha-nav-izq {
-        left: 16px;
-    }
+    .flecha-nav-izq { left: 16px; }
+    .flecha-nav-der { right: 16px; }
 
-    .flecha-nav-der {
-        right: 16px;
-    }
-
-    /* --- proyecto-descripcion.html --- */
+    /* Descripcion */
     .descripcion-contenedor {
         padding: 40px 20px 90px;
     }
@@ -471,7 +472,12 @@ img {
         height: 40vh;
     }
 
-    /* --- home.html --- */
+    .descripcion-page .iniciales-fija {
+        left: 20px;
+        bottom: 20px;
+    }
+
+    /* Home */
     .home-contenedor {
         padding: 24vh 6vw 6vh;
     }

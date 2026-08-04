@@ -1,66 +1,72 @@
+// =====================================================
+// DATOS COMPARTIDOS: LOS 6 PROYECTOS
+// Unica fuente de verdad. Cambiar aqui y se actualiza en todo el sitio.
+//
+// Rutas de archivo:
+//   videos:  videos/<slug>-1.mp4 ... <slug>-4.mp4
+//   renders: img/renders/<slug>-1.jpg ... <slug>-4.jpg
+//
+// POR AHORA: como los videos reales todavia no estan, usamos imagenes fijas
+// como placeholder (el campo "videoPoster"). Cuando Andrea mande los .mp4,
+// solo hay que subirlos con esos nombres y descomentar el uso de "videos"
+// en crearTarjetasInicial() mas abajo.
+// =====================================================
 const proyectos = [
     {
-        titulo: 'Proyecto 1',
-        descripcion: 'Blending Scandinavian minimalism with biophilic elements, this design transforms an urban apartment into a serene sanctuary defined by warm whites, soft sage green, light oak, and matte black accents. Low-profile modular furniture, sheer linen textiles, and natural greenery create a deeply tranquil, light-filled home.',
-        imagenes: [
-            'https://picsum.photos/seed/manzur-p1-1/1200/740',
-            'https://picsum.photos/seed/manzur-p1-2/1200/740',
-            'https://picsum.photos/seed/manzur-p1-3/1200/740',
-            'https://picsum.photos/seed/manzur-p1-4/1200/740'
-        ]
+        slug: 'waiting-room',
+        titulo: 'The Waiting Room',
+        descripcion: 'The Waiting Room is a haven designed to pause time. Between warm lighting, velvet textures, and an arching, immersive architecture, we created an intimate and cozy space where every detail invites you to stay. A corner with its own character and a cinematic aesthetic, crafted simply to enjoy an impeccable coffee and great conversation.'
     },
     {
-        titulo: 'Proyecto 2',
-        descripcion: 'A compact studio reimagined around light and flow, where floating oak volumes, warm plaster walls, and concealed storage carve calm, generous space out of a modest footprint. Every surface earns its place.',
-        imagenes: [
-            'https://picsum.photos/seed/manzur-p2-1/1200/740',
-            'https://picsum.photos/seed/manzur-p2-2/1200/740',
-            'https://picsum.photos/seed/manzur-p2-3/1200/740',
-            'https://picsum.photos/seed/manzur-p2-4/1200/740'
-        ]
+        slug: 'studio70',
+        titulo: 'Studio 70',
+        descripcion: 'Studio 70 is a retreat defined by material contrast. Between polished metal accents, reflective mirrors, and warm lighting, we created a cozy atmosphere where you can play pool or unwind with a film. A space with iconic character and a refined, retro-futurist aesthetic, designed simply to enjoy great entertainment and easy conversation.'
     },
     {
-        titulo: 'Proyecto 3',
-        descripcion: 'A family home organized around a central courtyard, pairing exposed concrete with warm timber and deep green textiles to balance rawness with everyday comfort. Light moves through the house all day long.',
-        imagenes: [
-            'https://picsum.photos/seed/manzur-p3-1/1200/740',
-            'https://picsum.photos/seed/manzur-p3-2/1200/740',
-            'https://picsum.photos/seed/manzur-p3-3/1200/740',
-            'https://picsum.photos/seed/manzur-p3-4/1200/740'
-        ]
+        slug: 'capsule',
+        titulo: 'Capsule',
+        descripcion: 'Capsule is a futuristic hub defined by organic geometry. Between sleek polished metal, rich dark leather, and warm wood accents, we created a focused atmosphere that channels an orbital design. A space with iconic character and a minimalist, sci-fi aesthetic, crafted simply to foster creativity and bold collaboration.'
     },
     {
-        titulo: 'Proyecto 4',
-        descripcion: 'A boutique workspace where matte black steel, fluted glass, and terracotta tones frame a flexible open plan built for focus, conversation, and slow afternoons. Warm, quiet, and unmistakably intentional.',
-        imagenes: [
-            'https://picsum.photos/seed/manzur-p4-1/1200/740',
-            'https://picsum.photos/seed/manzur-p4-2/1200/740',
-            'https://picsum.photos/seed/manzur-p4-3/1200/740',
-            'https://picsum.photos/seed/manzur-p4-4/1200/740'
-        ]
+        slug: 'muse',
+        titulo: 'Muse',
+        descripcion: 'Muse is a creative studio defined by playful composition. Between modular geometric sections, pleated shades, and rich color options, we created a kit where you can build your lamp. A design with an iconic character and a Tetris-inspired aesthetic, crafted with eco-PLA 3D printing simply to foster ingenuity and bold self-expression.'
     },
     {
+        slug: 'proyecto-5',
         titulo: 'Proyecto 5',
-        descripcion: 'A coastal retreat dressed in lime-washed walls, natural linen, and pale travertine, letting sea light and sheer curtains set the rhythm of every room. A house that breathes with the tide.',
-        imagenes: [
-            'https://picsum.photos/seed/manzur-p5-1/1200/740',
-            'https://picsum.photos/seed/manzur-p5-2/1200/740',
-            'https://picsum.photos/seed/manzur-p5-3/1200/740',
-            'https://picsum.photos/seed/manzur-p5-4/1200/740'
-        ]
+        descripcion: 'Placeholder para el proyecto 5. Reemplazar cuando Andrea mande el contenido real.'
     },
     {
+        slug: 'proyecto-6',
         titulo: 'Proyecto 6',
-        descripcion: 'A rooftop extension conceived as a glass pavilion, where slim profiles, planted terraces, and layered lighting dissolve the line between interior and sky. The city becomes part of the room.',
-        imagenes: [
-            'https://picsum.photos/seed/manzur-p6-1/1200/740',
-            'https://picsum.photos/seed/manzur-p6-2/1200/740',
-            'https://picsum.photos/seed/manzur-p6-3/1200/740',
-            'https://picsum.photos/seed/manzur-p6-4/1200/740'
-        ]
+        descripcion: 'Placeholder para el proyecto 6. Reemplazar cuando Andrea mande el contenido real.'
     }
 ];
 
+// Cada proyecto tiene 4 videos y 4 renders. Los nombres estan listos:
+// videos/waiting-room-1.mp4, videos/waiting-room-2.mp4, etc.
+// img/renders/waiting-room-1.jpg, img/renders/waiting-room-2.jpg, etc.
+function rutasVideos(slug) {
+    return [1, 2, 3, 4].map(n => `../videos/${slug}-${n}.mp4`);
+}
+function rutasRenders(slug) {
+    return [1, 2, 3, 4].map(n => `../img/renders/${slug}-${n}.jpg`);
+}
+
+// PLACEHOLDER visual: mientras no haya videos reales, usamos una imagen fija
+// para cada proyecto (una por proyecto, se ve el layout funcionando).
+// Cuando enchufemos los videos, esto se ignora.
+const posterPlaceholder = {
+    'waiting-room': 'https://picsum.photos/seed/waiting-room/1200/740',
+    'studio70':     'https://picsum.photos/seed/studio70/1200/740',
+    'capsule':      'https://picsum.photos/seed/capsule/1200/740',
+    'muse':         'https://picsum.photos/seed/muse/1200/740',
+    'proyecto-5':   'https://picsum.photos/seed/proyecto-5/1200/740',
+    'proyecto-6':   'https://picsum.photos/seed/proyecto-6/1200/740'
+};
+
+// Lee ?proyecto=N de la URL y lo convierte a indice 0..5 (por defecto el 1)
 function obtenerIndiceProyecto() {
     const params = new URLSearchParams(window.location.search);
     let n = parseInt(params.get('proyecto'), 10);
@@ -69,19 +75,26 @@ function obtenerIndiceProyecto() {
     return n - 1;
 }
 
+
+// =====================================================
+// CARRUSEL 3D DE VIDEOS (proyecto-video.html)
+// Muestra los 4 videos del proyecto actual. Sin nombre encima.
+// Flechas: navegan entre los 4 videos del MISMO proyecto.
+// Al llegar al ultimo video y darle ->, salta a la descripcion del proyecto.
+// =====================================================
 const tarjetasTrack = document.getElementById('tarjetasTrack');
-const nombreProyecto = document.getElementById('nombreProyecto');
 const btnAnterior = document.getElementById('btnAnterior');
 const btnSiguiente = document.getElementById('btnSiguiente');
 
-let indiceActivo = obtenerIndiceProyecto();
+const indiceProyectoActual = obtenerIndiceProyecto();
+let indiceVideoActivo = 0;
 let elementosTarjetas = [];
+const CANT_VIDEOS = 4;
 
 function calcularOffset(indice) {
-    const total = proyectos.length;
-    let diferencia = indice - indiceActivo;
-    if (diferencia > total / 2) diferencia -= total;
-    if (diferencia < -total / 2) diferencia += total;
+    let diferencia = indice - indiceVideoActivo;
+    if (diferencia > CANT_VIDEOS / 2) diferencia -= CANT_VIDEOS;
+    if (diferencia < -CANT_VIDEOS / 2) diferencia += CANT_VIDEOS;
     return diferencia;
 }
 
@@ -90,13 +103,35 @@ function crearTarjetasInicial() {
     tarjetasTrack.innerHTML = '';
     elementosTarjetas = [];
 
-    proyectos.forEach((proyecto) => {
+    const proyecto = proyectos[indiceProyectoActual];
+    const poster = posterPlaceholder[proyecto.slug] || posterPlaceholder['waiting-room'];
+
+    // POR AHORA: 4 tarjetas con la misma imagen placeholder por proyecto.
+    //
+    // CUANDO TENGAMOS LOS VIDEOS reales, reemplazar el bloque de abajo por:
+    //
+    //   const videos = rutasVideos(proyecto.slug);
+    //   videos.forEach((src) => {
+    //       const div = document.createElement('div');
+    //       div.classList.add('tarjeta');
+    //       const video = document.createElement('video');
+    //       video.src = src;
+    //       video.autoplay = true;
+    //       video.loop = true;
+    //       video.muted = true;
+    //       video.playsInline = true;
+    //       div.appendChild(video);
+    //       tarjetasTrack.appendChild(div);
+    //       elementosTarjetas.push(div);
+    //   });
+    //
+    for (let i = 0; i < CANT_VIDEOS; i++) {
         const div = document.createElement('div');
         div.classList.add('tarjeta');
-        div.style.backgroundImage = `url('${proyecto.imagenes[0]}')`;
+        div.style.backgroundImage = `url('${poster}')`;
         tarjetasTrack.appendChild(div);
         elementosTarjetas.push(div);
-    });
+    }
 }
 
 function actualizarPosiciones() {
@@ -138,61 +173,72 @@ function actualizarPosiciones() {
         div.style.zIndex = zIndex;
         div.classList.toggle('no-activa', !esActiva);
     });
-
-    actualizarTitulo();
-}
-
-function actualizarTitulo() {
-    if (!nombreProyecto) return;
-    nombreProyecto.textContent = proyectos[indiceActivo].titulo;
 }
 
 if (tarjetasTrack) {
     crearTarjetasInicial();
     actualizarPosiciones();
 
-    tarjetasTrack.addEventListener('click', () => {
-        if (nombreProyecto) nombreProyecto.classList.toggle('oculto');
-    });
-
-    if (nombreProyecto) {
-        nombreProyecto.addEventListener('click', (e) => {
-            e.stopPropagation();
-            window.location.href = `proyecto-descripcion.html?proyecto=${indiceActivo + 1}`;
-        });
-    }
-
+    // Flecha izquierda: video anterior. Si esta en el primero, no hace nada
+    // (evitamos que "se caiga" del proyecto por atras sin querer).
     if (btnAnterior) {
         btnAnterior.addEventListener('click', () => {
-            indiceActivo = (indiceActivo - 1 + proyectos.length) % proyectos.length;
-            actualizarPosiciones();
+            if (indiceVideoActivo > 0) {
+                indiceVideoActivo -= 1;
+                actualizarPosiciones();
+            }
         });
     }
 
+    // Flecha derecha: video siguiente.
+    // Cuando estas en el ULTIMO video del proyecto y le das ->, salta a la
+    // descripcion de ese mismo proyecto.
     if (btnSiguiente) {
         btnSiguiente.addEventListener('click', () => {
-            indiceActivo = (indiceActivo + 1) % proyectos.length;
-            actualizarPosiciones();
+            if (indiceVideoActivo < CANT_VIDEOS - 1) {
+                indiceVideoActivo += 1;
+                actualizarPosiciones();
+            } else {
+                window.location.href = `proyecto-descripcion.html?proyecto=${indiceProyectoActual + 1}`;
+            }
         });
     }
 }
 
+
+// =====================================================
+// PAGINA DESCRIPCION (proyecto-descripcion.html)
+// Muestra titulo + descripcion + 4 renders del proyecto actual.
+// Click en la imagen -> avanza al siguiente render.
+// Click en la ULTIMA imagen -> pasa al SIGUIENTE proyecto (sus videos).
+// Despues del proyecto 6 vuelve al proyecto 1 (loop, para no dejar callejones sin salida).
+// Flecha -> siempre lleva a home.html (ANDREA MANZUR).
+// A.M -> vuelve al video de ESTE proyecto.
+// =====================================================
 const tituloDescripcion = document.getElementById('tituloDescripcion');
 const descripcionTexto = document.getElementById('descripcionTexto');
 const renderDescripcion = document.getElementById('renderDescripcion');
 const renderClickable = document.getElementById('renderClickable');
 const descripcionIndicadores = document.getElementById('descripcionIndicadores');
 const btnVideoDesc = document.getElementById('btnVideoDesc');
-const btnAnteriorDesc = document.getElementById('btnAnteriorDesc');
-const btnSiguienteDesc = document.getElementById('btnSiguienteDesc');
 
 if (tituloDescripcion && descripcionTexto) {
     const idx = obtenerIndiceProyecto();
-    const total = proyectos.length;
     const proyecto = proyectos[idx];
-    const renders = proyecto.imagenes;
+
+    // Renders reales: img/renders/<slug>-1.jpg ... 4.jpg
+    // Placeholder mientras no esten: 4 variantes de la misma imagen del proyecto.
+    const rendersReales = rutasRenders(proyecto.slug);
+    const rendersPlaceholder = [1, 2, 3, 4].map(
+        n => `https://picsum.photos/seed/${proyecto.slug}-${n}/1200/740`
+    );
+    // POR AHORA usamos los placeholders. Cuando subas los renders reales al repo,
+    // cambia esta linea por: const renders = rendersReales;
+    const renders = rendersPlaceholder;
+
     let indiceRender = 0;
 
+    // Titulo y descripcion del proyecto actual
     tituloDescripcion.textContent = proyecto.titulo;
     descripcionTexto.textContent = proyecto.descripcion;
 
@@ -213,7 +259,15 @@ if (tituloDescripcion && descripcionTexto) {
 
         if (renderClickable) {
             renderClickable.addEventListener('click', () => {
-                indiceRender = (indiceRender + 1) % renders.length;
+                // Si estamos en la ULTIMA foto, saltar al siguiente proyecto
+                // (a los videos del proyecto siguiente). Loop 6 -> 1.
+                if (indiceRender === renders.length - 1) {
+                    const siguienteProyecto = (idx + 1) % proyectos.length + 1;
+                    window.location.href = `proyecto-video.html?proyecto=${siguienteProyecto}`;
+                    return;
+                }
+                // Si no, avanzar a la siguiente foto del mismo proyecto
+                indiceRender += 1;
                 renderDescripcion.style.opacity = 0;
                 setTimeout(() => {
                     renderDescripcion.src = renders[indiceRender];
@@ -224,26 +278,16 @@ if (tituloDescripcion && descripcionTexto) {
         }
     }
 
+    // A.M -> vuelve al video de este mismo proyecto
     if (btnVideoDesc) {
         btnVideoDesc.href = `proyecto-video.html?proyecto=${idx + 1}`;
     }
-
-    if (btnAnteriorDesc) {
-        const anterior = ((idx - 1 + total) % total) + 1;
-        btnAnteriorDesc.href = `proyecto-descripcion.html?proyecto=${anterior}`;
-    }
-
-    if (btnSiguienteDesc) {
-        const esUltimoProyecto = idx === total - 1;
-        if (esUltimoProyecto) {
-            btnSiguienteDesc.href = 'home.html';
-        } else {
-            const siguiente = idx + 2;
-            btnSiguienteDesc.href = `proyecto-descripcion.html?proyecto=${siguiente}`;
-        }
-    }
 }
 
+
+// =====================================================
+// PAGINA HOME (home.html) - Volver y toggle de contacto
+// =====================================================
 const btnVolver = document.getElementById('btnVolver');
 const btnContact = document.getElementById('btnContact');
 const contactoInfo = document.getElementById('contactoInfo');
