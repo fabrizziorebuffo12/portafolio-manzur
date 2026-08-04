@@ -87,9 +87,11 @@ img { max-width: 100%; }
     background-color: #000000;
     background-size: cover;
     background-position: center;
-    transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1),
-                opacity 1s cubic-bezier(0.25, 1, 0.5, 1),
-                filter 1s ease;
+    /* Curva mas agil (ease-out-expo) y un poco mas corta que antes, para que
+       el paso de un video a otro se sienta mas fluido y menos "pesado" */
+    transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.5s ease,
+                filter 0.5s ease;
     will-change: transform, opacity, filter;
 }
 .tarjeta video {
@@ -189,8 +191,8 @@ img { max-width: 100%; }
     gap: 20px;
 }
 .render-marco { border: none; background-color: #f2f2f2; overflow: hidden; }
-.render-marco img { object-fit: cover; transition: opacity 0.3s ease; }
 .render-marco-grande {
+    position: relative;
     border: none;
     background-color: transparent;
     width: 100%;
@@ -198,6 +200,20 @@ img { max-width: 100%; }
     max-height: 560px;
     cursor: pointer;
 }
+/* Dos capas de imagen superpuestas para crossfade real: la que entra y la
+   que sale animan al mismo tiempo, sin hueco en el medio. Las fotos se
+   precargan por JS asi el cambio de src es instantaneo. */
+.render-capa {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    z-index: 1;
+    transition: opacity 0.3s ease;
+}
+.render-capa-activa { opacity: 1; z-index: 2; }
 .descripcion-indicadores { display: flex; gap: 8px; justify-content: center; }
 .descripcion-indicadores .punto {
     width: 10px; height: 10px; border-radius: 50%;

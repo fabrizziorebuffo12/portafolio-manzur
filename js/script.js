@@ -176,10 +176,16 @@ if (tarjetasTrack) {
 
 // =====================================================
 // PAGINA DESCRIPCION (proyecto-descripcion.html)
+// Crossfade real entre dos capas de <img> superpuestas:
+// la que entra y la que sale animan al mismo tiempo, sin
+// hueco en el medio. Las 4 fotos del proyecto se precargan
+// apenas carga la pagina, asi el cambio es instantaneo
+// (no depende de la velocidad de red en el momento del click).
 // =====================================================
 const tituloDescripcion = document.getElementById('tituloDescripcion');
 const descripcionTexto = document.getElementById('descripcionTexto');
-const renderDescripcion = document.getElementById('renderDescripcion');
+const renderCapaA = document.getElementById('renderCapaA');
+const renderCapaB = document.getElementById('renderCapaB');
 const renderClickable = document.getElementById('renderClickable');
 const descripcionIndicadores = document.getElementById('descripcionIndicadores');
 const btnVideoDesc = document.getElementById('btnVideoDesc');
@@ -191,8 +197,15 @@ if (tituloDescripcion && descripcionTexto) {
     // Renders reales para los 4 proyectos con contenido, placeholder para 5 y 6
     const renders = proyecto.real
         ? rutasRenders(proyecto.slug)
-        : [1,2,3,4].map(n => `https://picsum.photos/seed/${proyecto.slug}-${n}/1200/740`);
+        : [1, 2, 3, 4].map(n => `https://picsum.photos/seed/${proyecto.slug}-${n}/1200/740`);
     let indiceRender = 0;
+
+    // Precarga las 4 fotos en memoria del navegador ni bien entra a la pagina.
+    // Cuando el usuario haga click, la foto siguiente ya esta lista.
+    renders.forEach((src) => {
+        const img = new Image();
+        img.src = src;
+    });
 
     tituloDescripcion.textContent = proyecto.titulo;
     descripcionTexto.textContent = proyecto.descripcion;
@@ -208,8 +221,13 @@ if (tituloDescripcion && descripcionTexto) {
         });
     }
 
-    if (renderDescripcion) {
-        renderDescripcion.src = renders[0];
+    // capas[0] = renderCapaA, capas[1] = renderCapaB. indiceCapaActiva dice cual
+    // de las dos esta arriba (opacity 1) en este momento.
+    const capas = [renderCapaA, renderCapaB];
+    let indiceCapaActiva = 0;
+
+    if (renderCapaA && renderCapaB) {
+        capas[indiceCapaActiva].src = renders[0];
         pintarIndicadoresDescripcion();
 
         if (renderClickable) {
@@ -220,13 +238,20 @@ if (tituloDescripcion && descripcionTexto) {
                     window.location.href = `proyecto-video.html?proyecto=${siguiente}`;
                     return;
                 }
+
                 indiceRender += 1;
-                renderDescripcion.style.opacity = 0;
-                setTimeout(() => {
-                    renderDescripcion.src = renders[indiceRender];
-                    renderDescripcion.style.opacity = 1;
-                    pintarIndicadoresDescripcion();
-                }, 300);
+
+                const capaSaliente = capas[indiceCapaActiva];
+                const indiceCapaEntrante = 1 - indiceCapaActiva;
+                const capaEntrante = capas[indiceCapaEntrante];
+
+                // La foto ya esta precargada, asi que el src se pinta al instante.
+                capaEntrante.src = renders[indiceRender];
+                capaEntrante.classList.add('render-capa-activa');
+                capaSaliente.classList.remove('render-capa-activa');
+
+                indiceCapaActiva = indiceCapaEntrante;
+                pintarIndicadoresDescripcion();
             });
         }
     }

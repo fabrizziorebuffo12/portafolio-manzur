@@ -25,9 +25,11 @@
             <div class="descripcion-columna-imagen">
                 <!-- Click en la imagen avanza a la siguiente foto del proyecto.
                      Cuando estas en la ULTIMA foto y clickeas, salta al SIGUIENTE proyecto
-                     (los videos del proyecto siguiente). Despues del 6 vuelve al 1. -->
+                     (los videos del proyecto siguiente). Despues del 6 vuelve al 1.
+                     Dos capas superpuestas para hacer crossfade real (sin hueco en el medio). -->
                 <div class="render-marco render-marco-grande" id="renderClickable">
-                    <img id="renderDescripcion" src="" class="w-100 h-100" alt="Render del proyecto">
+                    <img id="renderCapaA" class="render-capa render-capa-activa" src="" alt="Render del proyecto">
+                    <img id="renderCapaB" class="render-capa" src="" alt="Render del proyecto">
                 </div>
                 <div class="descripcion-indicadores" id="descripcionIndicadores"></div>
             </div>
