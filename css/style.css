@@ -9,15 +9,12 @@ body {
     text-transform: uppercase;
     font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
 }
-
-/* La descripcion y los datos de contacto van en formato normal */
 .descripcion-texto,
 .home-contact-info,
 .home-contact-info * { text-transform: none; }
-
 img { max-width: 100%; }
 
-/* Intro (index.html) */
+/* Intro */
 .intro-title {
     font-family: 'Archivo Black', sans-serif;
     color: #000000;
@@ -28,7 +25,7 @@ img { max-width: 100%; }
 }
 .intro-title:hover { transform: scale(1.03); color: #000000; }
 
-/* Grid de proyectos */
+/* Grid */
 .proyectos-contenedor {
     position: relative;
     width: 100%;
@@ -59,11 +56,12 @@ img { max-width: 100%; }
 }
 .proyecto-nombre:hover { transform: scale(1.05); color: #000000; }
 
-/* Carrusel 3D de videos */
+/* Carrusel */
 .carrusel-3d-contenedor {
     position: relative;
     width: 100%;
     height: 100vh;
+    height: 100dvh;
     background-color: #ffffff;
     overflow: hidden;
     display: flex;
@@ -84,17 +82,15 @@ img { max-width: 100%; }
     aspect-ratio: 1268 / 741;
     border-radius: 4px;
     overflow: hidden;
-    background-color: #000000;
+    background-color: #f2f2f2;
     background-size: cover;
     background-position: center;
-    /* Curva mas agil (ease-out-expo) y un poco mas corta que antes, para que
-       el paso de un video a otro se sienta mas fluido y menos "pesado" */
-    transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
-                opacity 0.5s ease,
-                filter 0.5s ease;
+    transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1),
+                opacity 1s cubic-bezier(0.25, 1, 0.5, 1),
+                filter 1s ease;
     will-change: transform, opacity, filter;
 }
-.tarjeta video {
+.tarjeta img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -102,7 +98,7 @@ img { max-width: 100%; }
 }
 .tarjeta.no-activa { filter: blur(1.5px) brightness(0.85); }
 
-/* Iniciales A.M — estatico, mismo color y tamano en TODAS las paginas */
+/* Iniciales A.M */
 .iniciales {
     font-family: 'Archivo Black', sans-serif;
     color: #5F040E;
@@ -110,8 +106,6 @@ img { max-width: 100%; }
     font-size: clamp(1.3rem, 2.5vw, 2rem);
 }
 .iniciales:hover { color: #5F040E; }
-
-/* A.M centrado abajo en descripcion y grid */
 .iniciales-fija {
     position: fixed;
     bottom: 30px;
@@ -119,8 +113,6 @@ img { max-width: 100%; }
     transform: translateX(-50%);
     z-index: 20;
 }
-
-/* A.M dentro del contenedor del video (misma posicion visual) */
 .iniciales-overlay {
     position: absolute;
     bottom: 30px;
@@ -129,20 +121,23 @@ img { max-width: 100%; }
     z-index: 10;
 }
 
-/* Flechas de navegacion */
+/* Flechas: mas gruesas y negras */
 .flecha-nav {
     position: absolute;
     bottom: 40px;
     background: none;
     border: none;
     color: #000000;
-    font-size: 1.6rem;
-    font-weight: 300;
+    font-family: 'Archivo Black', 'Arial Black', sans-serif;
+    font-size: clamp(1.8rem, 2.4vw, 2.4rem);
+    font-weight: 900;
     line-height: 1;
     cursor: pointer;
     z-index: 10;
     text-decoration: none;
+    text-shadow: 0.5px 0 0 currentColor, -0.5px 0 0 currentColor;
     transition: transform 0.2s ease;
+    padding: 6px 10px;
 }
 .flecha-nav:hover { transform: scale(1.15); color: #000000; }
 .flecha-nav-izq { left: 40px; }
@@ -190,30 +185,16 @@ img { max-width: 100%; }
     align-items: center;
     gap: 20px;
 }
-.render-marco { border: none; background-color: #f2f2f2; overflow: hidden; }
+.render-marco { border: none; background-color: #f7f7f7; overflow: hidden; }
+.render-marco img { object-fit: contain; transition: opacity 0.3s ease; }
 .render-marco-grande {
-    position: relative;
     border: none;
-    background-color: transparent;
+    background-color: #f7f7f7;
     width: 100%;
     height: 62vh;
     max-height: 560px;
     cursor: pointer;
 }
-/* Dos capas de imagen superpuestas para crossfade real: la que entra y la
-   que sale animan al mismo tiempo, sin hueco en el medio. Las fotos se
-   precargan por JS asi el cambio de src es instantaneo. */
-.render-capa {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    z-index: 1;
-    transition: opacity 0.3s ease;
-}
-.render-capa-activa { opacity: 1; z-index: 2; }
 .descripcion-indicadores { display: flex; gap: 8px; justify-content: center; }
 .descripcion-indicadores .punto {
     width: 10px; height: 10px; border-radius: 50%;
@@ -222,10 +203,11 @@ img { max-width: 100%; }
 }
 .descripcion-indicadores .punto.activo { background-color: #000000; }
 
-/* Home / Menu - A:M gigante centrado */
+/* Home: A.M gigante, sin parpadeo */
 .home-contenedor {
     width: 100%;
     min-height: 100vh;
+    min-height: 100dvh;
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
@@ -234,7 +216,6 @@ img { max-width: 100%; }
     position: relative;
     padding: 6vh 6vw 12vh;
 }
-
 .home-am-giant {
     font-family: 'Archivo Black', sans-serif;
     color: #000000;
@@ -244,30 +225,6 @@ img { max-width: 100%; }
     margin: 0;
     letter-spacing: 0.02em;
 }
-
-/* Los dos puntos: circulos reales (no el caracter ":"), centrados entre A y M */
-.home-am-giant .home-am-dots {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.16em;
-    width: 0.55em;
-    vertical-align: middle;
-    animation: clock-blink 1s infinite;
-}
-.home-am-giant .punto-am {
-    width: 0.2em;
-    height: 0.2em;
-    border-radius: 50%;
-    background-color: #000000;
-}
-@keyframes clock-blink {
-    0%, 50%       { opacity: 1; }
-    50.01%, 100%  { opacity: 0; }
-}
-
-/* MENU izquierda, CONTACT derecha, sin nada al medio */
 .home-nav {
     position: absolute;
     bottom: 6vh;
@@ -324,22 +281,42 @@ img { max-width: 100%; }
     margin-top: 6px;
 }
 
-/* Responsive */
+/* Responsive: tablets */
 @media (max-width: 900px) {
     .tarjeta { width: min(1268px, 78vw, 90vh); }
     .descripcion-contenedor { padding: 50px 30px 90px; }
     .proyectos-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* Responsive: telefonos - carrusel muestra UNA sola tarjeta */
 @media (max-width: 600px) {
     .intro-title { letter-spacing: 1px; }
     .proyectos-grid { grid-template-columns: 1fr; row-gap: 3.5vh; }
     .proyecto-nombre { font-size: 1.35rem; }
-    .tarjeta { width: min(1268px, 88vw, 62vh); }
-    .flecha-nav-izq { left: 16px; }
-    .flecha-nav-der { right: 16px; }
+
+    /* Solo la tarjeta activa se ve */
+    .tarjeta.no-activa {
+        opacity: 0 !important;
+        pointer-events: none;
+    }
+    .tarjeta {
+        width: min(1268px, 90vw, 62vh);
+    }
+
+    /* Flechas mas cerca del borde */
+    .flecha-nav-izq { left: 12px; }
+    .flecha-nav-der { right: 12px; }
+    .flecha-nav {
+        font-size: 1.9rem;
+        padding: 10px 12px;
+    }
+
+    /* Descripcion */
     .descripcion-contenedor { padding: 40px 20px 90px; }
     .descripcion-columna-imagen { max-width: 100%; }
-    .render-marco-grande { height: 40vh; }
+    .render-marco-grande { height: 44vh; }
+
+    /* Home */
     .home-nav { bottom: 4vh; }
     .home-link { font-size: 1rem; }
     .home-contact-info {

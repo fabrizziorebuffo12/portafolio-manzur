@@ -1,53 +1,59 @@
 // =====================================================
 // DATOS DE LOS 6 PROYECTOS
-// El flag "real" marca cuales tienen contenido real subido
-// (waiting-room, studio70, capsule, muse) vs cuales siguen
-// con placeholder (proyecto-5, proyecto-6).
+// - "real": tiene renders subidos (para el carrusel de la pagina 3)
+// - "planosReales": tiene planos subidos (para la descripcion)
+//   Cuando esten los planos, cambiar a true por proyecto.
 // =====================================================
 const proyectos = [
     {
         slug: 'waiting-room',
         real: true,
+        planosReales: false,
         titulo: 'The Waiting Room',
-        descripcion: 'The Waiting Room is a haven designed to pause time. Between warm lighting, velvet textures, and an arching, immersive architecture, we created an intimate and cozy space where every detail invites you to stay. A corner with its own character and a cinematic aesthetic, crafted simply to enjoy an impeccable coffee and great conversation.'
+        descripcion: 'This design proposal transforms the coffee experience into a cinematic, theatrical atmosphere. By contrasting red velvet curtains and a black-and-white checkered floor with sleek, polished stainless steel volumes, the space balances dramatic warmth with technical precision. Subtle, focused lighting and elevated platforms move away from traditional coffee shop layouts to deliver an immersive, mysterious, and timeless environment.'
     },
     {
         slug: 'studio70',
         real: true,
+        planosReales: false,
         titulo: 'Studio 70',
-        descripcion: 'Studio 70 is a retreat defined by material contrast. Between polished metal accents, reflective mirrors, and warm lighting, we created a cozy atmosphere where you can play pool or unwind with a film. A space with iconic character and a refined, retro-futurist aesthetic, designed simply to enjoy great entertainment and easy conversation.'
+        descripcion: 'An open-plan room balances rest and leisure in an intimate, scenic atmosphere. A dramatic circular portal of brushed metal encloses the sleeping area with its chocolate-brown bed and Scandinavian-style lighting. Beyond the arch, the space opens into a lounge and bar with a Ball Chair, tufted leather sofa, and fuchsia pool table, creating a sophisticated and immersive environment.'
     },
     {
         slug: 'capsule',
         real: true,
+        planosReales: false,
         titulo: 'Capsule',
-        descripcion: 'Capsule is a futuristic hub defined by organic geometry. Between sleek polished metal, rich dark leather, and warm wood accents, we created a focused atmosphere that channels an orbital design. A space with iconic character and a minimalist, sci-fi aesthetic, crafted simply to foster creativity and bold collaboration.'
+        descripcion: 'This executive office features a design where pure geometries and material rigor create a sophisticated workspace. Structured around an impactful modular wall of metallic panels with circular reliefs, it contrasts with tactile gray plaster walls. A lounge anchored by a curved burgundy leather sofa dialogues with the workstation, framed by an illuminated circular aperture, achieving balance and scenic comfort.'
     },
     {
         slug: 'muse',
         real: true,
+        planosReales: false,
         titulo: 'Muse',
-        descripcion: 'Muse is a creative studio defined by playful composition. Between modular geometric sections, pleated shades, and rich color options, we created a kit where you can build your lamp. A design with an iconic character and a Tetris-inspired aesthetic, crafted with eco-PLA 3D printing simply to foster ingenuity and bold self-expression.'
+        descripcion: 'This project features a modular PLA lamp manufactured through 3D printing, conceived as a customizable lighting totem. Stackable modules with pleated and fluted finishes allow for various heights and silhouettes, where upper white sections function as warm light diffusers while deeper-toned bases provide stability. Leveraging additive manufacturing precision, it merges technical versatility with a strong sculptural presence.'
     },
     {
         slug: 'proyecto-5',
         real: false,
+        planosReales: false,
         titulo: 'Proyecto 5',
         descripcion: 'Placeholder para el proyecto 5. Reemplazar cuando Andrea mande el contenido real.'
     },
     {
         slug: 'proyecto-6',
         real: false,
+        planosReales: false,
         titulo: 'Proyecto 6',
         descripcion: 'Placeholder para el proyecto 6. Reemplazar cuando Andrea mande el contenido real.'
     }
 ];
 
-function rutasVideos(slug) {
-    return [1, 2, 3, 4].map(n => `../videos/${slug}-${n}.mp4`);
-}
 function rutasRenders(slug) {
     return [1, 2, 3, 4].map(n => `../img/renders/${slug}-${n}.jpg`);
+}
+function rutasPlanos(slug) {
+    return [1, 2, 3, 4].map(n => `../img/planos/${slug}-plano-${n}.jpg`);
 }
 
 const posterPlaceholder = {
@@ -65,21 +71,22 @@ function obtenerIndiceProyecto() {
 
 
 // =====================================================
-// CARRUSEL DE VIDEOS (proyecto-video.html)
+// CARRUSEL DE RENDERS (proyecto-video.html)
+// Antes eran videos, ahora son los 4 renders del proyecto.
 // =====================================================
 const tarjetasTrack = document.getElementById('tarjetasTrack');
 const btnAnterior = document.getElementById('btnAnterior');
 const btnSiguiente = document.getElementById('btnSiguiente');
 
 const indiceProyectoActual = obtenerIndiceProyecto();
-let indiceVideoActivo = 0;
+let indiceActivo = 0;
 let elementosTarjetas = [];
-const CANT_VIDEOS = 4;
+const CANT_TARJETAS = 4;
 
 function calcularOffset(indice) {
-    let d = indice - indiceVideoActivo;
-    if (d > CANT_VIDEOS / 2) d -= CANT_VIDEOS;
-    if (d < -CANT_VIDEOS / 2) d += CANT_VIDEOS;
+    let d = indice - indiceActivo;
+    if (d > CANT_TARJETAS / 2) d -= CANT_TARJETAS;
+    if (d < -CANT_TARJETAS / 2) d += CANT_TARJETAS;
     return d;
 }
 
@@ -91,25 +98,22 @@ function crearTarjetasInicial() {
     const proyecto = proyectos[indiceProyectoActual];
 
     if (proyecto.real) {
-        // Videos reales (autoplay + loop + muted, sin controles)
-        const videos = rutasVideos(proyecto.slug);
-        videos.forEach((src) => {
+        // Renders reales
+        const imgs = rutasRenders(proyecto.slug);
+        imgs.forEach((src) => {
             const div = document.createElement('div');
             div.classList.add('tarjeta');
-            const video = document.createElement('video');
-            video.src = src;
-            video.autoplay = true;
-            video.loop = true;
-            video.muted = true;
-            video.playsInline = true;
-            div.appendChild(video);
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = proyecto.titulo;
+            div.appendChild(img);
             tarjetasTrack.appendChild(div);
             elementosTarjetas.push(div);
         });
     } else {
-        // Placeholder: la misma imagen para las 4 tarjetas
+        // Placeholder para proyectos 5 y 6
         const poster = posterPlaceholder[proyecto.slug];
-        for (let i = 0; i < CANT_VIDEOS; i++) {
+        for (let i = 0; i < CANT_TARJETAS; i++) {
             const div = document.createElement('div');
             div.classList.add('tarjeta');
             div.style.backgroundImage = `url('${poster}')`;
@@ -149,43 +153,55 @@ function actualizarPosiciones() {
     });
 }
 
+function irSiguienteTarjeta() {
+    if (indiceActivo < CANT_TARJETAS - 1) {
+        indiceActivo += 1;
+        actualizarPosiciones();
+    } else {
+        window.location.href = `proyecto-descripcion.html?proyecto=${indiceProyectoActual + 1}`;
+    }
+}
+
+function irAnteriorTarjeta() {
+    if (indiceActivo > 0) {
+        indiceActivo -= 1;
+        actualizarPosiciones();
+    }
+}
+
 if (tarjetasTrack) {
     crearTarjetasInicial();
     actualizarPosiciones();
 
-    if (btnAnterior) {
-        btnAnterior.addEventListener('click', () => {
-            if (indiceVideoActivo > 0) {
-                indiceVideoActivo -= 1;
-                actualizarPosiciones();
-            }
-        });
-    }
-    if (btnSiguiente) {
-        btnSiguiente.addEventListener('click', () => {
-            if (indiceVideoActivo < CANT_VIDEOS - 1) {
-                indiceVideoActivo += 1;
-                actualizarPosiciones();
-            } else {
-                window.location.href = `proyecto-descripcion.html?proyecto=${indiceProyectoActual + 1}`;
-            }
-        });
+    if (btnAnterior) btnAnterior.addEventListener('click', irAnteriorTarjeta);
+    if (btnSiguiente) btnSiguiente.addEventListener('click', irSiguienteTarjeta);
+
+    // Swipe tactil en movil: deslizar izq/der para cambiar de imagen
+    const contenedor = document.querySelector('.carrusel-3d-contenedor');
+    if (contenedor) {
+        let touchStartX = null;
+        contenedor.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+        contenedor.addEventListener('touchend', (e) => {
+            if (touchStartX === null) return;
+            const dx = e.changedTouches[0].clientX - touchStartX;
+            touchStartX = null;
+            if (Math.abs(dx) < 50) return;
+            if (dx < 0) irSiguienteTarjeta();
+            else irAnteriorTarjeta();
+        }, { passive: true });
     }
 }
 
 
 // =====================================================
 // PAGINA DESCRIPCION (proyecto-descripcion.html)
-// Crossfade real entre dos capas de <img> superpuestas:
-// la que entra y la que sale animan al mismo tiempo, sin
-// hueco en el medio. Las 4 fotos del proyecto se precargan
-// apenas carga la pagina, asi el cambio es instantaneo
-// (no depende de la velocidad de red en el momento del click).
+// Muestra los PLANOS del proyecto (placeholders por ahora).
 // =====================================================
 const tituloDescripcion = document.getElementById('tituloDescripcion');
 const descripcionTexto = document.getElementById('descripcionTexto');
-const renderCapaA = document.getElementById('renderCapaA');
-const renderCapaB = document.getElementById('renderCapaB');
+const renderDescripcion = document.getElementById('renderDescripcion');
 const renderClickable = document.getElementById('renderClickable');
 const descripcionIndicadores = document.getElementById('descripcionIndicadores');
 const btnVideoDesc = document.getElementById('btnVideoDesc');
@@ -194,64 +210,45 @@ if (tituloDescripcion && descripcionTexto) {
     const idx = obtenerIndiceProyecto();
     const proyecto = proyectos[idx];
 
-    // Renders reales para los 4 proyectos con contenido, placeholder para 5 y 6
-    const renders = proyecto.real
-        ? rutasRenders(proyecto.slug)
-        : [1, 2, 3, 4].map(n => `https://picsum.photos/seed/${proyecto.slug}-${n}/1200/740`);
-    let indiceRender = 0;
-
-    // Precarga las 4 fotos en memoria del navegador ni bien entra a la pagina.
-    // Cuando el usuario haga click, la foto siguiente ya esta lista.
-    renders.forEach((src) => {
-        const img = new Image();
-        img.src = src;
-    });
+    // Planos reales cuando planosReales=true, placeholder si no
+    const imagenes = proyecto.planosReales
+        ? rutasPlanos(proyecto.slug)
+        : [1,2,3,4].map(n => `https://picsum.photos/seed/${proyecto.slug}-plano-${n}/1200/900`);
+    let indiceImagen = 0;
 
     tituloDescripcion.textContent = proyecto.titulo;
     descripcionTexto.textContent = proyecto.descripcion;
 
-    function pintarIndicadoresDescripcion() {
+    function pintarIndicadores() {
         if (!descripcionIndicadores) return;
         descripcionIndicadores.innerHTML = '';
-        renders.forEach((_, i) => {
+        imagenes.forEach((_, i) => {
             const punto = document.createElement('div');
             punto.classList.add('punto');
-            if (i === indiceRender) punto.classList.add('activo');
+            if (i === indiceImagen) punto.classList.add('activo');
             descripcionIndicadores.appendChild(punto);
         });
     }
 
-    // capas[0] = renderCapaA, capas[1] = renderCapaB. indiceCapaActiva dice cual
-    // de las dos esta arriba (opacity 1) en este momento.
-    const capas = [renderCapaA, renderCapaB];
-    let indiceCapaActiva = 0;
-
-    if (renderCapaA && renderCapaB) {
-        capas[indiceCapaActiva].src = renders[0];
-        pintarIndicadoresDescripcion();
+    if (renderDescripcion) {
+        renderDescripcion.src = imagenes[0];
+        pintarIndicadores();
 
         if (renderClickable) {
             renderClickable.addEventListener('click', () => {
-                // Ultima foto -> saltar al siguiente proyecto (loop 6 -> 1)
-                if (indiceRender === renders.length - 1) {
+                // Ultima imagen -> siguiente proyecto (loop 6 -> 1)
+                if (indiceImagen === imagenes.length - 1) {
                     const siguiente = (idx + 1) % proyectos.length + 1;
                     window.location.href = `proyecto-video.html?proyecto=${siguiente}`;
                     return;
                 }
-
-                indiceRender += 1;
-
-                const capaSaliente = capas[indiceCapaActiva];
-                const indiceCapaEntrante = 1 - indiceCapaActiva;
-                const capaEntrante = capas[indiceCapaEntrante];
-
-                // La foto ya esta precargada, asi que el src se pinta al instante.
-                capaEntrante.src = renders[indiceRender];
-                capaEntrante.classList.add('render-capa-activa');
-                capaSaliente.classList.remove('render-capa-activa');
-
-                indiceCapaActiva = indiceCapaEntrante;
-                pintarIndicadoresDescripcion();
+                indiceImagen += 1;
+                renderDescripcion.style.opacity = 0;
+                setTimeout(() => {
+                    renderDescripcion.src = imagenes[indiceImagen];
+                    renderDescripcion.style.opacity = 1;
+                    pintarIndicadores();
+                }, 300);
             });
         }
     }
@@ -263,7 +260,7 @@ if (tituloDescripcion && descripcionTexto) {
 
 
 // =====================================================
-// PAGINA HOME (home.html) - toggle de contacto
+// PAGINA HOME - toggle de contacto
 // =====================================================
 const btnContact = document.getElementById('btnContact');
 const contactoInfo = document.getElementById('contactoInfo');
