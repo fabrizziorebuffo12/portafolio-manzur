@@ -1,8 +1,7 @@
 // =====================================================
-// DATOS DE LOS 6 PROYECTOS
-// - "real": tiene renders subidos (para el carrusel de la pagina 3)
-// - "planosReales": tiene planos subidos (para la descripcion)
-//   Cuando esten los planos, cambiar a true por proyecto.
+// DATOS DE LOS 5 PROYECTOS
+// - "real": tiene renders subidos (carrusel pagina 3)
+// - "planosReales": tiene planos subidos (descripcion)
 // =====================================================
 const proyectos = [
     {
@@ -34,18 +33,11 @@ const proyectos = [
         descripcion: 'This project features a modular PLA lamp manufactured through 3D printing, conceived as a customizable lighting totem. Stackable modules with pleated and fluted finishes allow for various heights and silhouettes, where upper white sections function as warm light diffusers while deeper-toned bases provide stability. Leveraging additive manufacturing precision, it merges technical versatility with a strong sculptural presence.'
     },
     {
-        slug: 'proyecto-5',
+        slug: 'dos-son-multitud',
         real: false,
         planosReales: false,
-        titulo: 'Proyecto 5',
-        descripcion: 'Placeholder para el proyecto 5. Reemplazar cuando Andrea mande el contenido real.'
-    },
-    {
-        slug: 'proyecto-6',
-        real: false,
-        planosReales: false,
-        titulo: 'Proyecto 6',
-        descripcion: 'Placeholder para el proyecto 6. Reemplazar cuando Andrea mande el contenido real.'
+        titulo: 'Dos Son Multitud',
+        descripcion: 'Tesis de Andrea. Placeholder por ahora; reemplazar cuando lleguen los renders, planos y descripcion real.'
     }
 ];
 
@@ -57,8 +49,7 @@ function rutasPlanos(slug) {
 }
 
 const posterPlaceholder = {
-    'proyecto-5': 'https://picsum.photos/seed/proyecto-5/1200/740',
-    'proyecto-6': 'https://picsum.photos/seed/proyecto-6/1200/740'
+    'dos-son-multitud': '../img/placeholder.svg'
 };
 
 function obtenerIndiceProyecto() {
@@ -72,7 +63,6 @@ function obtenerIndiceProyecto() {
 
 // =====================================================
 // CARRUSEL DE RENDERS (proyecto-video.html)
-// Antes eran videos, ahora son los 4 renders del proyecto.
 // =====================================================
 const tarjetasTrack = document.getElementById('tarjetasTrack');
 const btnAnterior = document.getElementById('btnAnterior');
@@ -98,7 +88,6 @@ function crearTarjetasInicial() {
     const proyecto = proyectos[indiceProyectoActual];
 
     if (proyecto.real) {
-        // Renders reales
         const imgs = rutasRenders(proyecto.slug);
         imgs.forEach((src) => {
             const div = document.createElement('div');
@@ -111,7 +100,6 @@ function crearTarjetasInicial() {
             elementosTarjetas.push(div);
         });
     } else {
-        // Placeholder para proyectos 5 y 6
         const poster = posterPlaceholder[proyecto.slug];
         for (let i = 0; i < CANT_TARJETAS; i++) {
             const div = document.createElement('div');
@@ -176,7 +164,6 @@ if (tarjetasTrack) {
     if (btnAnterior) btnAnterior.addEventListener('click', irAnteriorTarjeta);
     if (btnSiguiente) btnSiguiente.addEventListener('click', irSiguienteTarjeta);
 
-    // Swipe tactil en movil: deslizar izq/der para cambiar de imagen
     const contenedor = document.querySelector('.carrusel-3d-contenedor');
     if (contenedor) {
         let touchStartX = null;
@@ -196,8 +183,7 @@ if (tarjetasTrack) {
 
 
 // =====================================================
-// PAGINA DESCRIPCION (proyecto-descripcion.html)
-// Muestra los PLANOS del proyecto (placeholders por ahora).
+// PAGINA DESCRIPCION
 // =====================================================
 const tituloDescripcion = document.getElementById('tituloDescripcion');
 const descripcionTexto = document.getElementById('descripcionTexto');
@@ -210,10 +196,9 @@ if (tituloDescripcion && descripcionTexto) {
     const idx = obtenerIndiceProyecto();
     const proyecto = proyectos[idx];
 
-    // Planos reales cuando planosReales=true, placeholder si no
     const imagenes = proyecto.planosReales
         ? rutasPlanos(proyecto.slug)
-        : [1,2,3,4].map(n => `https://picsum.photos/seed/${proyecto.slug}-plano-${n}/1200/900`);
+        : [1,2,3,4].map(n => '../img/placeholder.svg');
     let indiceImagen = 0;
 
     tituloDescripcion.textContent = proyecto.titulo;
@@ -236,7 +221,6 @@ if (tituloDescripcion && descripcionTexto) {
 
         if (renderClickable) {
             renderClickable.addEventListener('click', () => {
-                // Ultima imagen -> siguiente proyecto (loop 6 -> 1)
                 if (indiceImagen === imagenes.length - 1) {
                     const siguiente = (idx + 1) % proyectos.length + 1;
                     window.location.href = `proyecto-video.html?proyecto=${siguiente}`;
