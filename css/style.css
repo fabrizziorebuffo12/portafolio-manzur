@@ -328,3 +328,7 @@ img { max-width: 100%; }
     .home-contact-desc, .home-contact-dato { font-size: 0.8rem; }
     .home-contact-ciudad { font-size: 0.62rem; }
 }
+
+/* Grid: los 2 de abajo se alinean con las columnas 1 y 2 (no centrados) */
+.proyectos-grid { justify-content: flex-start; }
+.proyecto-vacio { visibility: hidden; pointer-events: none; }
