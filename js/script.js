@@ -1,56 +1,60 @@
 // =====================================================
 // DATOS DE LOS 5 PROYECTOS
 // - "real": tiene renders subidos (carrusel pagina 3)
-// - "planosReales": tiene planos subidos (descripcion)
+// - "planosCount": cuantos planos reales tiene (0 = usar placeholders)
 // =====================================================
 const proyectos = [
     {
         slug: 'waiting-room',
         real: true,
-        planosReales: false,
+        planosCount: 0,
         titulo: 'The Waiting Room',
         descripcion: 'This design proposal transforms the coffee experience into a cinematic, theatrical atmosphere. By contrasting red velvet curtains and a black-and-white checkered floor with sleek, polished stainless steel volumes, the space balances dramatic warmth with technical precision. Subtle, focused lighting and elevated platforms move away from traditional coffee shop layouts to deliver an immersive, mysterious, and timeless environment.'
     },
     {
         slug: 'studio70',
         real: true,
-        planosReales: false,
+        planosCount: 0,
         titulo: 'Studio 70',
         descripcion: 'An open-plan room balances rest and leisure in an intimate, scenic atmosphere. A dramatic circular portal of brushed metal encloses the sleeping area with its chocolate-brown bed and Scandinavian-style lighting. Beyond the arch, the space opens into a lounge and bar with a Ball Chair, tufted leather sofa, and fuchsia pool table, creating a sophisticated and immersive environment.'
     },
     {
         slug: 'capsule',
         real: true,
-        planosReales: false,
+        planosCount: 0,
         titulo: 'Capsule',
         descripcion: 'This executive office features a design where pure geometries and material rigor create a sophisticated workspace. Structured around an impactful modular wall of metallic panels with circular reliefs, it contrasts with tactile gray plaster walls. A lounge anchored by a curved burgundy leather sofa dialogues with the workstation, framed by an illuminated circular aperture, achieving balance and scenic comfort.'
     },
     {
         slug: 'muse',
         real: true,
-        planosReales: false,
+        planosCount: 0,
         titulo: 'Muse',
         descripcion: 'This project features a modular PLA lamp manufactured through 3D printing, conceived as a customizable lighting totem. Stackable modules with pleated and fluted finishes allow for various heights and silhouettes, where upper white sections function as warm light diffusers while deeper-toned bases provide stability. Leveraging additive manufacturing precision, it merges technical versatility with a strong sculptural presence.'
     },
     {
         slug: 'dos-son-multitud',
         real: false,
-        planosReales: false,
+        planosCount: 0,
         titulo: 'Dos Son Multitud',
         descripcion: 'Tesis de Andrea. Placeholder por ahora; reemplazar cuando lleguen los renders, planos y descripcion real.'
     }
 ];
 
-function rutasRenders(slug) {
-    return [1, 2, 3, 4].map(n => `../img/renders/${slug}-${n}.jpg`);
-}
-function rutasPlanos(slug) {
-    return [1, 2, 3, 4].map(n => `../img/planos/${slug}-plano-${n}.jpg`);
-}
+// Cuantos planos reales tiene cada proyecto cuando esten subidos.
+// Al subir los archivos, cambiar el planosCount del proyecto correspondiente:
+//   waiting-room: 3   studio70: 4   muse: 2   capsule: 4   dos-son-multitud: 0
+const CANT_RENDERS = 4;
 
-const posterPlaceholder = {
-    'dos-son-multitud': '../img/placeholder.svg'
-};
+function rutasRenders(slug) {
+    return Array.from({length: CANT_RENDERS}, (_, i) => `../img/renders/${slug}-${i+1}.jpg`);
+}
+function rutasPlanos(slug, count) {
+    return Array.from({length: count}, (_, i) => `../img/planos/${slug}-plano-${i+1}.jpg`);
+}
+function placeholdersPlanos(count) {
+    return Array.from({length: count}, () => '../img/placeholder.svg');
+}
 
 function obtenerIndiceProyecto() {
     const params = new URLSearchParams(window.location.search);
@@ -71,12 +75,11 @@ const btnSiguiente = document.getElementById('btnSiguiente');
 const indiceProyectoActual = obtenerIndiceProyecto();
 let indiceActivo = 0;
 let elementosTarjetas = [];
-const CANT_TARJETAS = 4;
 
-function calcularOffset(indice) {
+function calcularOffset(indice, total) {
     let d = indice - indiceActivo;
-    if (d > CANT_TARJETAS / 2) d -= CANT_TARJETAS;
-    if (d < -CANT_TARJETAS / 2) d += CANT_TARJETAS;
+    if (d > total / 2) d -= total;
+    if (d < -total / 2) d += total;
     return d;
 }
 
@@ -100,11 +103,13 @@ function crearTarjetasInicial() {
             elementosTarjetas.push(div);
         });
     } else {
-        const poster = posterPlaceholder[proyecto.slug];
-        for (let i = 0; i < CANT_TARJETAS; i++) {
+        for (let i = 0; i < CANT_RENDERS; i++) {
             const div = document.createElement('div');
             div.classList.add('tarjeta');
-            div.style.backgroundImage = `url('${poster}')`;
+            const img = document.createElement('img');
+            img.src = '../img/placeholder.svg';
+            img.alt = proyecto.titulo;
+            div.appendChild(img);
             tarjetasTrack.appendChild(div);
             elementosTarjetas.push(div);
         }
@@ -112,8 +117,9 @@ function crearTarjetasInicial() {
 }
 
 function actualizarPosiciones() {
+    const total = elementosTarjetas.length;
     elementosTarjetas.forEach((div, i) => {
-        const offset = calcularOffset(i);
+        const offset = calcularOffset(i, total);
         let transform = '', opacity = '1', zIndex = '5', esActiva = false;
         if (offset === 0) {
             transform = 'translate(-50%, -50%) scale(1)';
@@ -142,7 +148,8 @@ function actualizarPosiciones() {
 }
 
 function irSiguienteTarjeta() {
-    if (indiceActivo < CANT_TARJETAS - 1) {
+    const total = elementosTarjetas.length;
+    if (indiceActivo < total - 1) {
         indiceActivo += 1;
         actualizarPosiciones();
     } else {
@@ -183,7 +190,7 @@ if (tarjetasTrack) {
 
 
 // =====================================================
-// PAGINA DESCRIPCION
+// PAGINA DESCRIPCION - planos con cantidad variable
 // =====================================================
 const tituloDescripcion = document.getElementById('tituloDescripcion');
 const descripcionTexto = document.getElementById('descripcionTexto');
@@ -196,9 +203,10 @@ if (tituloDescripcion && descripcionTexto) {
     const idx = obtenerIndiceProyecto();
     const proyecto = proyectos[idx];
 
-    const imagenes = proyecto.planosReales
-        ? rutasPlanos(proyecto.slug)
-        : [1,2,3,4].map(n => '../img/placeholder.svg');
+    // Si planosCount > 0 usa los reales; si 0, muestra 4 placeholders
+    const imagenes = proyecto.planosCount > 0
+        ? rutasPlanos(proyecto.slug, proyecto.planosCount)
+        : placeholdersPlanos(4);
     let indiceImagen = 0;
 
     tituloDescripcion.textContent = proyecto.titulo;

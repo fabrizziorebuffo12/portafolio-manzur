@@ -49,7 +49,8 @@ img { max-width: 100%; }
     font-family: 'Archivo Black', sans-serif;
     color: #000000;
     text-decoration: none;
-    font-size: clamp(1.1rem, 2vw, 1.7rem);
+    font-size: clamp(0.95rem, 1.6vw, 1.4rem);
+    white-space: nowrap;
     text-align: center;
     transition: transform 0.25s ease;
 }
@@ -129,7 +130,7 @@ img { max-width: 100%; }
     background-position: center;
     background-size: contain;
     border: none;
-    width: 64px;
+    width: 48px;
     height: 26px;
     cursor: pointer;
     z-index: 10;
@@ -300,7 +301,7 @@ img { max-width: 100%; }
 /* Responsive: telefonos (5 items -> 1 por fila) */
 @media (max-width: 600px) {
     .intro-title { letter-spacing: 1px; }
-    .proyecto-nombre { flex: 0 0 100%; font-size: 1.35rem; }
+    .proyecto-nombre { flex: 0 0 100%; font-size: 1.15rem; white-space: nowrap; }
     .proyectos-grid { gap: 3.5vh 0; }
 
     /* Solo la tarjeta activa */
@@ -310,7 +311,7 @@ img { max-width: 100%; }
     /* Flechas mas cerca del borde */
     .flecha-nav-izq { left: 14px; }
     .flecha-nav-der { right: 14px; }
-    .flecha-nav { width: 52px; height: 22px; bottom: 32px; }
+    .flecha-nav { width: 40px; height: 20px; bottom: 32px; }
 
     .descripcion-contenedor { padding: 40px 20px 90px; }
     .descripcion-columna-imagen { max-width: 100%; }
