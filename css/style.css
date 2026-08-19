@@ -85,8 +85,8 @@ img { max-width: 100%; }
     position: absolute;
     top: 52%;
     left: 50%;
-    width: min(1268px, 62vw, 96.6vh);
-    aspect-ratio: 1268 / 741;
+    width: min(1268px, 62vw, 75vh);
+    aspect-ratio: 4 / 3;
     border-radius: 4px;
     overflow: hidden;
     background-color: #f2f2f2;
@@ -311,7 +311,7 @@ img { max-width: 100%; }
 
 /* Responsive: tablets (5 items -> 2+2+1 centrados) */
 @media (max-width: 900px) {
-    .tarjeta { width: min(1268px, 78vw, 90vh); }
+    .tarjeta { width: min(1268px, 78vw, 70vh); }
     .descripcion-contenedor { padding: 50px 30px 90px; }
     .proyecto-nombre { flex: 0 0 calc(50% - 4vw); }
     .proyectos-grid { gap: 4vh 4vw; }
@@ -325,7 +325,7 @@ img { max-width: 100%; }
 
     /* Solo la tarjeta activa */
     .tarjeta.no-activa { opacity: 0 !important; pointer-events: none; }
-    .tarjeta { width: min(1268px, 90vw, 62vh); }
+    .tarjeta { width: min(1268px, 90vw, 48vh); }
 
     /* Flechas mas cerca del borde */
     .flecha-nav-izq { left: 14px; }
