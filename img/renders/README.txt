@@ -1,28 +1,13 @@
-Subir aqui los renders con estos nombres exactos:
+waiting-room, studio70, capsule y dos-son-multitud: renders reales subidos
+(correcciones de Andrea, 2026-08-19).
 
-waiting-room-1.jpg
-waiting-room-2.jpg
-waiting-room-3.jpg
-waiting-room-4.jpg
-
-studio70-1.jpg
-studio70-2.jpg
-studio70-3.jpg
-studio70-4.jpg
-
-capsule-1.jpg
-capsule-2.jpg
-capsule-3.jpg
-capsule-4.jpg
-
-muse-1.jpg
-muse-2.jpg
-muse-3.jpg
-muse-4.jpg
+Pendiente: muse-1.jpg .. muse-4.jpg siguen siendo placeholders, todavia no
+llegaron renders nuevos para ese proyecto.
 
 Formato recomendado:
   - .jpg
-  - Ancho ~1600 px
+  - Ancho ~1600-2200 px
   - Menos de 300 KB por archivo (comprimir con squoosh.app)
 
-Cuando esten subidos, avisar y activamos los renders reales en js/script.js.
+Cuando lleguen los de muse, subirlos con esos mismos nombres y subir
+rendersCount a lo que corresponda en js/script.js si cambia la cantidad.
