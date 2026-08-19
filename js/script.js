@@ -93,10 +93,13 @@ function crearTarjetasInicial() {
 
     if (proyecto.real) {
         const imgs = rutasRenders(proyecto.slug, proyecto.rendersCount);
-        imgs.forEach((src) => {
+        imgs.forEach((src, i) => {
             const div = document.createElement('div');
             div.classList.add('tarjeta');
             const img = document.createElement('img');
+            // La primera imagen (la que se ve de entrada) se pide con prioridad alta;
+            // el resto del proyecto se sigue pidiendo en paralelo pero de fondo.
+            img.fetchPriority = i === 0 ? 'high' : 'low';
             img.src = src;
             img.alt = proyecto.titulo;
             div.appendChild(img);
@@ -176,7 +179,11 @@ if (tarjetasTrack) {
         const planos = proyectoActual.planosCount > 0
             ? rutasPlanos(proyectoActual.slug, proyectoActual.planosCount)
             : placeholdersPlanos(4);
-        planos.forEach((src) => { new Image().src = src; });
+        planos.forEach((src) => {
+            const pre = new Image();
+            pre.fetchPriority = 'low';
+            pre.src = src;
+        });
     }
 
     if (btnAnterior) btnAnterior.addEventListener('click', irAnteriorTarjeta);
@@ -247,6 +254,7 @@ if (tituloDescripcion && descripcionTexto) {
     let capaFondo = renderCapaB;
 
     if (renderCapaA && renderCapaB) {
+        renderCapaA.fetchPriority = 'high';
         renderCapaA.src = imagenes[0];
         renderCapaA.classList.add('render-capa-activa');
         renderCapaB.classList.remove('render-capa-activa');
