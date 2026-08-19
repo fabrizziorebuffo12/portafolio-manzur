@@ -9,7 +9,7 @@ const proyectos = [
         slug: 'waiting-room',
         real: true,
         rendersCount: 4,
-        planosCount: 0,
+        planosCount: 3,
         titulo: 'The Waiting Room',
         descripcion: 'This design proposal transforms the coffee experience into a cinematic, theatrical atmosphere. By contrasting red velvet curtains and a black-and-white checkered floor with sleek, polished stainless steel volumes, the space balances dramatic warmth with technical precision. Subtle, focused lighting and elevated platforms move away from traditional coffee shop layouts to deliver an immersive, mysterious, and timeless environment.'
     },
@@ -33,7 +33,7 @@ const proyectos = [
         slug: 'muse',
         real: true,
         rendersCount: 4,
-        planosCount: 0,
+        planosCount: 2,
         titulo: 'Muse',
         descripcion: 'This project features a modular PLA lamp manufactured through 3D printing, conceived as a customizable lighting totem. Stackable modules with pleated and fluted finishes allow for various heights and silhouettes, where upper white sections function as warm light diffusers while deeper-toned bases provide stability. Leveraging additive manufacturing precision, it merges technical versatility with a strong sculptural presence.'
     },
