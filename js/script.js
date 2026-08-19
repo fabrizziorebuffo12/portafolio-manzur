@@ -169,6 +169,16 @@ if (tarjetasTrack) {
     crearTarjetasInicial();
     actualizarPosiciones();
 
+    // Precargar los planos de este proyecto mientras se ve el carrusel de renders,
+    // para que ya esten en cache del navegador al llegar a la pagina de descripcion.
+    const proyectoActual = proyectos[indiceProyectoActual];
+    if (proyectoActual) {
+        const planos = proyectoActual.planosCount > 0
+            ? rutasPlanos(proyectoActual.slug, proyectoActual.planosCount)
+            : placeholdersPlanos(4);
+        planos.forEach((src) => { new Image().src = src; });
+    }
+
     if (btnAnterior) btnAnterior.addEventListener('click', irAnteriorTarjeta);
     if (btnSiguiente) btnSiguiente.addEventListener('click', irSiguienteTarjeta);
 
