@@ -162,8 +162,12 @@ function irSiguienteTarjeta() {
 }
 
 function irAnteriorTarjeta() {
+    const total = elementosTarjetas.length;
     if (indiceActivo > 0) {
         indiceActivo -= 1;
+        actualizarPosiciones();
+    } else if (total > 1) {
+        indiceActivo = total - 1;
         actualizarPosiciones();
     }
 }
