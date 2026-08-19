@@ -3,6 +3,8 @@
 // - "real": tiene renders subidos (carrusel pagina 3)
 // - "rendersCount": cuantos renders reales tiene
 // - "planosCount": cuantos planos reales tiene (0 = usar placeholders)
+// - "ratio": ancho/alto real de los renders de este proyecto, para que el
+//   marco del carrusel coincida exacto y no queden franjas
 // =====================================================
 const proyectos = [
     {
@@ -10,6 +12,7 @@ const proyectos = [
         real: true,
         rendersCount: 4,
         planosCount: 3,
+        ratio: 1840 / 1408,
         titulo: 'The Waiting Room',
         descripcion: 'This design proposal transforms the coffee experience into a cinematic, theatrical atmosphere. By contrasting red velvet curtains and a black-and-white checkered floor with sleek, polished stainless steel volumes, the space balances dramatic warmth with technical precision. Subtle, focused lighting and elevated platforms move away from traditional coffee shop layouts to deliver an immersive, mysterious, and timeless environment.'
     },
@@ -18,6 +21,7 @@ const proyectos = [
         real: true,
         rendersCount: 4,
         planosCount: 4,
+        ratio: 1856 / 1392,
         titulo: 'Studio 70',
         descripcion: 'An open-plan room balances rest and leisure in an intimate, scenic atmosphere. A dramatic circular portal of brushed metal encloses the sleeping area with its chocolate-brown bed and Scandinavian-style lighting. Beyond the arch, the space opens into a lounge and bar with a Ball Chair, tufted leather sofa, and fuchsia pool table, creating a sophisticated and immersive environment.'
     },
@@ -26,6 +30,7 @@ const proyectos = [
         real: true,
         rendersCount: 4,
         planosCount: 5,
+        ratio: 1840 / 1408,
         titulo: 'Capsule',
         descripcion: 'This executive office features a design where pure geometries and material rigor create a sophisticated workspace. Structured around an impactful modular wall of metallic panels with circular reliefs, it contrasts with tactile gray plaster walls. A lounge anchored by a curved burgundy leather sofa dialogues with the workstation, framed by an illuminated circular aperture, achieving balance and scenic comfort.'
     },
@@ -34,6 +39,7 @@ const proyectos = [
         real: true,
         rendersCount: 4,
         planosCount: 2,
+        ratio: 1,
         titulo: 'Muse',
         descripcion: 'This project features a modular PLA lamp manufactured through 3D printing, conceived as a customizable lighting totem. Stackable modules with pleated and fluted finishes allow for various heights and silhouettes, where upper white sections function as warm light diffusers while deeper-toned bases provide stability. Leveraging additive manufacturing precision, it merges technical versatility with a strong sculptural presence.'
     },
@@ -42,6 +48,7 @@ const proyectos = [
         real: true,
         rendersCount: 12,
         planosCount: 1,
+        ratio: 1840 / 1408,
         titulo: 'Dos Son Multitud',
         descripcion: 'This home is an intimate sanctuary where voluntary isolation becomes the ultimate form of happiness; a space of radical lines where chairs possess a soul and every object waits, with its own feelings, to fuel a creative explosion. A realm of deep silences acting as a protective womb, allowing the mind to reconcile with its inner contradictions through raw matter.'
     }
@@ -90,6 +97,7 @@ function crearTarjetasInicial() {
     elementosTarjetas = [];
 
     const proyecto = proyectos[indiceProyectoActual];
+    tarjetasTrack.style.setProperty('--ratio', proyecto.ratio || (4 / 3));
 
     if (proyecto.real) {
         const imgs = rutasRenders(proyecto.slug, proyecto.rendersCount);
